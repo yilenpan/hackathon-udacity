@@ -11,7 +11,8 @@ app.controller('MasterWord', function($scope, GameService){
       $scope.word = '';
     }
   };
-  $scope.game = GameService.getGame($scope.gameId);
+  $scope.game = GameService.getGame();
+  console.log($scope.game);
 });
 
 app.service('GameService', function ($firebaseArray, FIREBASE_URI) {
@@ -19,12 +20,12 @@ app.service('GameService', function ($firebaseArray, FIREBASE_URI) {
     var ref = new Firebase(FIREBASE_URI);
     var games = $firebaseArray(ref);
 
-    service.getGame = function (gameId) {
-        return games[gameId];
+    service.getGame = function () {
+        return games;
     };
 
     service.setWord = function (word, gameId) {
-      ref.remove();
+      //ref.remove();
       var game = {};
       game.players = [];
       game.secretWord = word;
