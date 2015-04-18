@@ -12,7 +12,6 @@ app.controller('MasterWord', function($scope, WordService){
   };
   $scope.words = WordService.getWords();
   $scope.removeWord = function(){};
-
 });
 
 app.service('WordService', function ($firebaseArray, FIREBASE_URI) {
@@ -27,9 +26,5 @@ app.service('WordService', function ($firebaseArray, FIREBASE_URI) {
     service.setWord = function (word) {
       ref.remove();
       words.$add(word);
-    };
-
-    service.removeWord = function (word) {
-        words.$remove(word);
     };
 });
