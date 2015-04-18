@@ -1,0 +1,9 @@
+<div ng-controller="PlayerCtrl">
+<input type="text" ng-model="playerName">
+<table>
+	<tr ng-repeat="game in games">
+		<td>Game {{$index}} <input type="button" value="Join" ng-click="joinGame(game)"></td>
+	</tr>
+</table>
+
+</div>

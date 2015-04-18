@@ -1,0 +1,17 @@
+  <div ng-controller="GuessWord" class="secret-word-div">
+
+    <h3>Player name: {{playerName}}</h3>
+    
+    <div ng-repeat="letter in secretWord track by $index"class="guessword-letter-box">
+      <span ng-show="lettersGuessedCorrectly.indexOf(letter) > -1" class="guessword-letter">{{letter}}</span>
+      <span ng-show="lettersGuessedCorrectly.indexOf(letter) <= -1" class="guessword-letter">&nbsp;</span>
+    </div>
+    
+    <div class="guess-box">
+      <form>
+        <input type="text" ng-model="currentGuess" placeholder="guess a letter..."/>
+        <input type="submit" ng-click="guessNewLetter(currentGuess)"/>
+      </form>
+    </div>
+    
+  </div>
