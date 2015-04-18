@@ -32,3 +32,5 @@ app.service('GameService', function ($firebaseArray, FIREBASE_URI) {
       games.$add(game);
     };
 });
+
+module.exports = app;
