@@ -10,6 +10,9 @@ app.controller('MasterWord', function($scope, WordService){
       $scope.word = '';
     }
   };
+  $scope.words = WordService.getWords();
+  $scope.removeWord = function(){};
+
 });
 
 app.service('WordService', function ($firebaseArray, FIREBASE_URI) {
@@ -23,10 +26,6 @@ app.service('WordService', function ($firebaseArray, FIREBASE_URI) {
 
     service.addWord = function (word) {
         words.$add(word);
-    };
-
-    service.updateWord = function (word) {
-        words.$save(word);
     };
 
     service.removeWord = function (word) {
