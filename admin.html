@@ -10,7 +10,10 @@
     <body>
         <div class="container" ng-controller="MasterWord">
             <h1> {{ word }} </h1>
-            <input type="text" ng-model="word">
+            <form ng-submit="addWord()">
+                <input type="text" ng-model="word" name="word">
+                <input type="submit" id="submit" value="Submit">
+            </form>
         </div>
 
 
