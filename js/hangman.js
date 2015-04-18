@@ -2,29 +2,32 @@ var app = angular.module('hangman', ['firebase']);
 
 app.constant('FIREBASE_URI', 'http://blinding-heat-8369.firebaseio.com/');
 
-app.controller('MasterWord', function($scope, WordService){
+app.controller('MasterWord', function($scope, GameService){
   $scope.word = "hello world";
+  $scope.gameId = 0; //TODO: allow admin to select gameId
   $scope.setWord = function(){
     if ($scope.word){
-      WordService.setWord($scope.word);
+      GameService.setWord($scope.word, $scope.gameId); //finds gameId and adds word to it
       $scope.word = '';
     }
   };
-  $scope.words = WordService.getWords();
-  $scope.removeWord = function(){};
+  $scope.game = GameService.getGame($scope.gameId);
 });
 
-app.service('WordService', function ($firebaseArray, FIREBASE_URI) {
+app.service('GameService', function ($firebaseArray, FIREBASE_URI) {
     var service = this;
     var ref = new Firebase(FIREBASE_URI);
-    var words = $firebaseArray(ref);
+    var games = $firebaseArray(ref);
 
-    service.getWords = function () {
-        return words;
+    service.getGame = function (gameId) {
+        return games[gameId];
     };
 
-    service.setWord = function (word) {
+    service.setWord = function (word, gameId) {
       ref.remove();
-      words.$add(word);
+      var game = {};
+      game.players = [];
+      game.secretWord = word;
+      games.$add(game);
     };
 });
