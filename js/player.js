@@ -22,7 +22,7 @@ app.controller('PlayerCtrl', function($scope, $firebaseArray, FIREBASE_URI, Game
     $scope.games = $firebaseArray(ref);
     $scope.startGame = function(game) {
     	GameService.setGame(game);
-    	GameService.setName($scope.playerName);
+    	GameService.addPlayer($scope.playerName, $scope.games.indexOf(game));
     	$location.path('playergame');
     };
 
@@ -35,10 +35,12 @@ app.controller('PlayerCtrl', function($scope, $firebaseArray, FIREBASE_URI, Game
     };
 });
 
-app.service('GameService', function () {
+app.service('GameService', function ($firebaseArray, FIREBASE_URI) {
 	var service = this;
     var game = {};
     var name = "Default Player";
+    var ref = new Firebase(FIREBASE_URI);
+    var games = $firebaseArray(ref);
 
     service.getGame = function () {
         return game;
@@ -53,6 +55,27 @@ app.service('GameService', function () {
     };
     service.setName = function(n) {
     	name = n;
+    };
+    service.addPlayer = function(name,gameId){
+      var thisGame = games[gameId];
+      if (!thisGame.players){
+        thisGame.players=[]
+     }
+      var playerProfile = {
+          "name":name,
+          "guesses" :[],
+          "AoD" : false
+      };
+
+      thisGame.players.push(playerProfile);
+
+      games.$save(thisGame);
+    };
+
+    service.addGuessedLetter = function(letter, game){
+
+        game.player[playerID].guesses.push(letter);
+        games.$save(thisGame);
     };
 });
 
