@@ -4,9 +4,9 @@ app.constant('FIREBASE_URI', 'http://blinding-heat-8369.firebaseio.com/');
 
 app.controller('MasterWord', function($scope, WordService){
   $scope.word = "hello world";
-  $scope.addWord = function(){
+  $scope.setWord = function(){
     if ($scope.word){
-      WordService.addWord($scope.word);
+      WordService.setWord($scope.word);
       $scope.word = '';
     }
   };
@@ -24,8 +24,9 @@ app.service('WordService', function ($firebaseArray, FIREBASE_URI) {
         return words;
     };
 
-    service.addWord = function (word) {
-        words.$add(word);
+    service.setWord = function (word) {
+      ref.remove();
+      words.$add(word);
     };
 
     service.removeWord = function (word) {
